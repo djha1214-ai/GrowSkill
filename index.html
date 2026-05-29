@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growskill — Hire Gig Talent, Fast</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0d0d0d;
+    --off: #f5f2ec;
+    --accent: #ff4d1c;
+    --accent2: #1a1a2e;
+    --muted: #6b6b6b;
+    --border: rgba(13,13,13,0.12);
+    --card: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 6%;
+    background: rgba(245,242,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.4rem;
+    color: var(--ink); text-decoration: none;
+    letter-spacing: -0.03em;
+  }
+  .logo span { color: var(--accent); }
+  nav a.nav-cta {
+    background: var(--ink); color: var(--off);
+    padding: 10px 22px; border-radius: 100px;
+    font-size: 0.85rem; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.01em;
+    transition: background 0.2s;
+  }
+  nav a.nav-cta:hover { background: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 120px 6% 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -120px; right: -80px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(255,77,28,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff;
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    width: fit-content; margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.04em;
+    max-width: 820px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--accent);
+    position: relative;
+  }
+  .hero-sub {
+    margin-top: 24px;
+    font-size: 1.1rem; color: var(--muted);
+    max-width: 520px; line-height: 1.7;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    margin-top: 40px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--ink); color: var(--off);
+    padding: 15px 32px; border-radius: 100px;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    border: 1.5px solid var(--border);
+    padding: 15px 32px; border-radius: 100px;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 48px; flex-wrap: wrap;
+    margin-top: 64px; padding-top: 40px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    letter-spacing: -0.04em; color: var(--ink);
+  }
+  .stat-label { font-size: 0.82rem; color: var(--muted); font-weight: 400; }
+
+  /* HOW IT WORKS */
+  section { padding: 100px 6%; }
+  .section-tag {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.1; max-width: 580px;
+    margin-bottom: 60px;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2px;
+  }
+  .step-card {
+    background: var(--card);
+    padding: 36px 32px;
+    position: relative; overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .step-card:hover { transform: translateY(-4px); z-index: 1; box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem; font-weight: 800;
+    color: rgba(13,13,13,0.06);
+    line-height: 1; margin-bottom: 20px;
+    letter-spacing: -0.04em;
+  }
+  .step-icon {
+    width: 44px; height: 44px;
+    background: var(--accent);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    font-size: 1.2rem;
+  }
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 10px; letter-spacing: -0.02em;
+  }
+  .step-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* WHO WE SERVE */
+  .serve-section { background: var(--ink); color: var(--off); }
+  .serve-section .section-tag { color: var(--accent); }
+  .serve-section .section-title { color: var(--off); }
+
+  .serve-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .serve-card {
+    border: 1px solid rgba(245,242,236,0.12);
+    border-radius: 16px; padding: 32px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .serve-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .serve-card-icon {
+    font-size: 2rem; margin-bottom: 18px;
+  }
+  .serve-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    margin-bottom: 10px; letter-spacing: -0.02em;
+    color: var(--off);
+  }
+  .serve-card-desc { font-size: 0.88rem; color: rgba(245,242,236,0.55); line-height: 1.7; }
+  .serve-card-pills {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
+  }
+  .pill {
+    background: rgba(255,77,28,0.15); color: var(--accent);
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 500;
+  }
+
+  /* APPLY FORM */
+  .apply-section { background: var(--off); }
+  .form-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: start;
+  }
+  @media (max-width: 768px) { .form-wrapper { grid-template-columns: 1fr; } }
+  .form-left .section-title { margin-bottom: 20px; }
+  .form-left p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+  .trust-items { display: flex; flex-direction: column; gap: 14px; }
+  .trust-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 0.88rem; color: var(--muted);
+  }
+  .trust-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0; margin-top: 6px;
+  }
+
+  .apply-form {
+    background: var(--card);
+    border-radius: 20px; padding: 36px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+  }
+  .apply-form h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 24px; letter-spacing: -0.02em;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block; font-size: 0.82rem; font-weight: 500;
+    color: var(--muted); margin-bottom: 8px;
+    letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 13px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; color: var(--ink);
+    background: var(--off);
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--accent); background: #fff; }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .submit-btn {
+    width: 100%; background: var(--accent); color: #fff;
+    border: none; padding: 15px; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; margin-top: 8px;
+    letter-spacing: 0.01em;
+  }
+  .submit-btn:hover { background: #e03d0e; transform: translateY(-2px); }
+  .form-note { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 12px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); color: rgba(245,242,236,0.5);
+    padding: 48px 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  footer .logo { color: var(--off); }
+  footer p { font-size: 0.82rem; }
+  footer a { color: rgba(245,242,236,0.5); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero-stats { gap: 28px; }
+    .form-row { grid-template-columns: 1fr; }
+    nav .nav-cta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Grow<span>skill</span></a>
+  <a href="#apply" class="nav-cta">Apply Now →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">🚀 India's Gig Talent Network</div>
+  <h1>We connect <em>gig workers</em> to companies that need them</h1>
+  <p class="hero-sub">Beauticians, delivery partners, and skilled gig workers — find your next opportunity with top brands. Companies, find pre-vetted talent in days, not weeks.</p>
+  <div class="hero-actions">
+    <a href="#apply" class="btn-primary">Apply as a Candidate →</a>
+    <a href="#companies" class="btn-outline">I'm hiring</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">500+</span>
+      <span class="stat-label">Candidates placed</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">50+</span>
+      <span class="stat-label">Partner companies</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">48hr</span>
+      <span class="stat-label">Avg. time to match</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <p class="section-tag">How it works</p>
+  <h2 class="section-title">From application to placement in 3 steps</h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-icon">📝</div>
+      <div class="step-title">Apply on our website</div>
+      <p class="step-desc">Fill a quick form with your skills, location, and availability. Takes under 3 minutes.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title">We match you</div>
+      <p class="step-desc">Our team reviews your profile and connects you with the right company based on your skills.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-icon">✅</div>
+      <div class="step-title">Get placed & start earning</div>
+      <p class="step-desc">Join the team, complete your onboarding, and start working — usually within 48 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE SERVE -->
+<section class="serve-section" id="companies">
+  <p class="section-tag">Who we serve</p>
+  <h2 class="section-title">Built for India's fastest-growing gig sectors</h2>
+  <div class="serve-grid">
+    <div class="serve-card">
+      <div class="serve-card-icon">💄</div>
+      <div class="serve-card-title">Beauty & Wellness</div>
+      <p class="serve-card-desc">Beauticians, makeup artists, and salon professionals for home beauty services platforms across India.</p>
+      <div class="serve-card-pills">
+        <span class="pill">Beauticians</span>
+        <span class="pill">Salon staff</span>
+        <span class="pill">Home services</span>
+      </div>
+    </div>
+    <div class="serve-card">
+      <div class="serve-card-icon">🛵</div>
+      <div class="serve-card-title">Delivery & Logistics</div>
+      <p class="serve-card-desc">Delivery executives and logistics partners for food delivery, e-commerce, and quick commerce companies.</p>
+      <div class="serve-card-pills">
+        <span class="pill">Delivery partners</span>
+        <span class="pill">Logistics</span>
+        <span class="pill">Last-mile</span>
+      </div>
+    </div>
+    <div class="serve-card">
+      <div class="serve-card-icon">🏢</div>
+      <div class="serve-card-title">For Startups & Companies</div>
+      <p class="serve-card-desc">We handle sourcing, vetting, and onboarding so you can scale your gig workforce without the hassle.</p>
+      <div class="serve-card-pills">
+        <span class="pill">Bulk hiring</span>
+        <span class="pill">Pre-vetted</span>
+        <span class="pill">Fast turnaround</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY FORM -->
+<section class="apply-section" id="apply">
+  <div class="form-wrapper">
+    <div class="form-left">
+      <p class="section-tag">Apply now</p>
+      <h2 class="section-title">Ready to find your next gig?</h2>
+      <p>Fill in your details and our team will reach out within 24 hours to match you with the right opportunity.</p>
+      <div class="trust-items">
+        <div class="trust-item"><span class="trust-dot"></span><span>Free to apply — no charges ever</span></div>
+        <div class="trust-item"><span class="trust-dot"></span><span>Opportunities across Delhi NCR, Mumbai, Bangalore & more</span></div>
+        <div class="trust-item"><span class="trust-dot"></span><span>Work with brands like Zomato, Swiggy, and top beauty platforms</span></div>
+        <div class="trust-item"><span class="trust-dot"></span><span>Flexible hours, competitive pay</span></div>
+      </div>
+    </div>
+    <div class="apply-form">
+      <h3>Tell us about yourself</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First name</label>
+          <input type="text" placeholder="Rahul">
+        </div>
+        <div class="form-group">
+          <label>Last name</label>
+          <input type="text" placeholder="Sharma">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Mobile number</label>
+        <input type="tel" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" placeholder="Delhi, Gurgaon, Mumbai...">
+      </div>
+      <div class="form-group">
+        <label>I want to work as</label>
+        <select>
+          <option value="">Select your role</option>
+          <option>Beautician / Makeup Artist</option>
+          <option>Salon Professional</option>
+          <option>Delivery Partner</option>
+          <option>Logistics Executive</option>
+          <option>Other gig role</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Experience (optional)</label>
+        <textarea placeholder="Tell us briefly about your experience..."></textarea>
+      </div>
+      <button class="submit-btn">Submit Application</button>
+      <p class="form-note">We'll call you within 24 hours. No spam, ever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo">Grow<span>skill</span></a>
+  <p>© 2025 Growskill. All rights reserved.</p>
+  <p><a href="mailto:hello@growskill.in">hello@growskill.in</a></p>
+</footer>
+
+</body>
+</html>
